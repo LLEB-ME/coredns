@@ -76,8 +76,8 @@
             src: "/tmp/coredns_{{ coredns_version }}_linux_{{ go_arch }}/coredns"
             dest: "/usr/local/bin/coredns"
             mode: 0750
-            owner: "{{ coredns_system_user }}"
-            group: "{{ coredns_system_group }}"
+            owner: "coredns"
+            group: "coredns"
           notify: restart coredns
           when: not ansible_check_mode
 
@@ -103,8 +103,8 @@
       ansible.builtin.template:
         src: "{{ item }}"
         dest: /etc/coredns/keys
-        owner: "{{ coredns_system_user }}"
-        group: "{{ coredns_system_group }}"
+        owner: "coredns"
+        group: "coredns"
         mode: 0400
       with_fileglob: "{{ coredns_keys }}"
 
