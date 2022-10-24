@@ -1,5 +1,4 @@
-farer.,
-fa. {
+farer fa {
   auto {
     directory /etc/coredns/zones/
     reload 45s
