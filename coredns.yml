@@ -71,6 +71,7 @@
             src: "/tmp/coredns_{{ coredns_version }}_linux_{{ go_arch }}.tgz"
             dest: "/tmp/coredns_{{ coredns_version }}_linux_{{ go_arch }}"
             creates: "/tmp/coredns_{{ coredns_version }}_linux_{{ go_arch }}/coredns"
+            remote_src: yes
           delegate_to: localhost
           check_mode: false
         - name: Install CoreDNS binaries
