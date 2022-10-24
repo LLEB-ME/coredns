@@ -2,7 +2,7 @@
 Proof of concept of CoreDNS with RFC 1035 data.
 
 ### USAGE
-1. [Install Ansible.](https://docs.ansible.com/ansible/latest/installation_guide/index.html) (you should set your [hosts](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/known_hosts_module.html).)
+1. [Install and Configure Ansible.](https://docs.ansible.com/ansible/latest/installation_guide/index.html)
 2. Clone this repository (`git clone git@github.com:LLEB-ME/coredns-poc.git`)
 3. Run this playbook (`ansible-playbook main.yml --ask-become-pass`)
 
