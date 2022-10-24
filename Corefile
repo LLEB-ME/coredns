@@ -1,7 +1,8 @@
 farer fa {
   auto {
-    directory /etc/coredns/zones/
+    directory /etc/coredns/zones
     reload 120s
   }
+  health
   errors
 }
