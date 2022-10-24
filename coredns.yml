@@ -41,7 +41,9 @@
       block:
         - name: Fetch checksum for CoreDNS binary
           ansible.builtin.set_fact:
-            coredns_checksum: "{{ lookup('url', 'https://github.com/coredns/coredns/releases/download/v' + coredns_version + '/coredns_' + coredns_version + '_linux_' + go_arch + '.tgz.sha256').split(' ')[0] }}"
+            coredns_checksum: "{{ lookup('url', 'https://github.com/coredns/coredns/releases/download/\
+                              v' + coredns_version + '/coredns_' + coredns_version + '_linux_' + go_arch\
+                              + '.tgz.sha256').split(' ')[0] }}"
           run_once: true
         - name: Download CoreDNS binary
           become: false
