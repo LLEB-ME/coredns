@@ -6,9 +6,9 @@
 
   pre_tasks:
     - name: Confirm that SystemD is being used
-            assert:
-              that: ansible_service_mgr == 'systemd'
-              msg: "This playbook is intended for use on machines using SystemD. This will not be the case after leaving POC state."
+        assert:
+          that: ansible_service_mgr == 'systemd'
+          msg: "This playbook is intended for use on machines using SystemD. This will not be the case after leaving POC state."
 
   tasks:
         - name: Create the `coredns` group
