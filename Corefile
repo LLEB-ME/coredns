@@ -1,8 +1,13 @@
-farer,
-fa {
+.:53 {
   errors
-  auto {
+  health
+  auto fa. {
     directory /etc/coredns/zones/
   }
+  auto farer. {
+    directory /etc/coredns/zones/
+  }
+  fallthrough
+  errors stdout
   reload 45s
 }
