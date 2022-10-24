@@ -1,9 +1,9 @@
 ---
 - name: Update CoreDNS zones and keys
   hosts: all
-
-  vars_files:
-    - "{{ playbook_dir }}/config.yml"
+  include_vars:
+    file: "{{ playbook_dir }}/config.yml"
+    #name: config
 
   tasks:
     - name: Update Corefile
