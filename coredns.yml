@@ -108,6 +108,7 @@
         group: "coredns"
         mode: 0400
       with_fileglob: "{{ coredns_keys }}"
+      notify: restart coredns
 
     - name: Add zone files
       ansible.builtin.template:
@@ -117,3 +118,4 @@
         group: root
         mode: 0644
       with_fileglob: "{{ coredns_zones }}"
+      notify: restart coredns
