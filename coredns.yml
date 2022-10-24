@@ -39,10 +39,6 @@
 
     - name: Download and install CoreDNS binary
       block:
-        - name: Fetch architecture
-          ansible.builtin.shell: 
-            cmd: /bin/arch
-          register: go_arch
         - name: Fetch checksum for CoreDNS binary
           ansible.builtin.set_fact:
             coredns_checksum: "{{ lookup('url', 'https://github.com/coredns/coredns/releases/download/\
