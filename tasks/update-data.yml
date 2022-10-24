@@ -1,0 +1,35 @@
+- name: Update CoreDNS zones and keys
+  hosts: all
+
+  vars_files:
+    - config.yml
+
+  tasks:
+    - name: Update Corefile
+      ansible.builtin.template:
+        src: "{{ coredns_config }}"
+        dest: /etc/coredns/Corefile
+        owner: root
+        group: root
+        mode: 0644
+      notify: restart coredns
+
+    - name: Update key files
+      ansible.builtin.template:
+        src: "{{ item }}"
+        dest: /etc/coredns/keys
+        owner: "coredns"
+        group: "coredns"
+        mode: 0400
+      with_fileglob: "{{ coredns_keys }}"
+      notify: restart coredns
+
+    - name: Update zone files
+      ansible.builtin.template:
+        src: "{{ item }}"
+        dest: /etc/coredns/zones
+        owner: root
+        group: root
+        mode: 0644
+      with_fileglob: "{{ coredns_zones }}"
+      notify: restart coredns
