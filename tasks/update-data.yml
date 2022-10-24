@@ -1,10 +1,9 @@
----
 - name: Update CoreDNS zones and keys
   hosts: all
 
   tasks:
     - name: Update Corefile
-      template:
+      ansible.builtin.template:
         src: "{{ coredns_config }}"
         dest: /etc/coredns/Corefile
         owner: root
@@ -14,7 +13,7 @@
       notify: restart coredns
 
     - name: Update key files
-      template:
+      ansible.builtin.template:
         src: "{{ item }}"
         dest: /etc/coredns/keys
         owner: "coredns"
@@ -25,7 +24,7 @@
       notify: restart coredns
 
     - name: Update zone files
-      template:
+      ansible.builtin.template:
         src: "{{ item }}"
         dest: /etc/coredns/zones
         owner: root
