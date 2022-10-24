@@ -11,107 +11,107 @@
           msg: "This playbook is intended for use on machines using SystemD. This will not be the case after leaving POC state."
 
   tasks:
-        - name: Create the `coredns` group
-          ansible.builtin.group:
-            name: "coredns"
-            state: present
-            system: true
-        - name: Create the `coredns` user
-          ansible.builtin.user:
-            name: "coredns"
-            groups: "coredns"
-            append: true
-            shell: /usr/sbin/nologin
-            system: true
-            createhome: false
-            home: /
-        - name: Prepare CoreDNS directories
-          ansible.builtin.file:
-            path: "{{ item }}"
-            state: directory
-            owner: root
-            group: root
-            mode: 0755
-          with_items:
-            - /etc/coredns
-            - /etc/coredns/keys
-            - /etc/coredns/zones
+    - name: Create the `coredns` group
+      ansible.builtin.group:
+        name: "coredns"
+        state: present
+        system: true
+    - name: Create the `coredns` user
+      ansible.builtin.user:
+        name: "coredns"
+        groups: "coredns"
+        append: true
+        shell: /usr/sbin/nologin
+        system: true
+        createhome: false
+        home: /
+    - name: Prepare CoreDNS directories
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        owner: root
+        group: root
+        mode: 0755
+      with_items:
+        - /etc/coredns
+        - /etc/coredns/keys
+        - /etc/coredns/zones
 
-        - block: 
-          - name: Fetch checksum for CoreDNS binary
-            ansible.builtin.set_fact:
-              coredns_checksum: "{{ lookup('url', 'https://github.com/coredns/coredns/releases/download/v' + coredns_version + '/coredns_' + coredns_version + '_linux_' + go_arch + '.tgz.sha256').split(' ')[0] }}"
-            run_once: true
-          - name: Download CoreDNS binary
-            become: false
-            ansible.builtin.get_url:
-              url: "https://github.com/coredns/coredns/releases/download/v{{ coredns_version }}/coredns_{{ coredns_version }}_linux_{{ go_arch }}.tgz"
-              dest: "/tmp/coredns_{{ coredns_version }}_linux_{{ go_arch }}.tgz"
-              checksum: "sha256:{{ coredns_checksum }}"
-            register: _download_binary
-            until: _download_binary is succeeded
-            retries: 5
-            delay: 2
-            delegate_to: localhost
-            check_mode: false
-          - name: Prepare for CoreDNS deflation
-            become: false
-            ansible.builtin.file:
-              path: "/tmp/coredns_{{ coredns_version }}_linux_{{ go_arch }}"
-              state: directory
-              mode: 0755
-            delegate_to: localhost
-            check_mode: false
-          - name: Defalte CoreDNS tarball
-            become: false
-            ansible.builtin.unarchive:
-              src: "/tmp/coredns_{{ coredns_version }}_linux_{{ go_arch }}.tgz"
-              dest: "/tmp/coredns_{{ coredns_version }}_linux_{{ go_arch }}"
-              creates: "/tmp/coredns_{{ coredns_version }}_linux_{{ go_arch }}/coredns"
-            delegate_to: localhost
-            check_mode: false
-          - name: Install CoreDNS binaries
-            ansible.builtin.copy:
-              src: "/tmp/coredns_{{ coredns_version }}_linux_{{ go_arch }}/coredns"
-              dest: "/usr/local/bin/coredns"
-              mode: 0750
-              owner: "{{ coredns_system_user }}"
-              group: "{{ coredns_system_group }}"
-            notify: restart coredns
-            when: not ansible_check_mode
-
-      - name: Install the CoreDNS service (SystemD)
-        ansible.builtin.template:
-          src: coredns.service
-          dest: /etc/systemd/system/coredns.service
-          owner: root
-          group: root
-          mode: 0644
-        notify: restart coredns 
-
-      - name: Add Corefile
-        ansible.builtin.template:
-          src: "{{ coredns_config }}"
-          dest: /etc/coredns/Corefile
-          owner: root
-          group: root
-          mode: 0644
-        notify: restart coredns
-
-      - name: Add key files
-        ansible.builtin.template:
-          src: "{{ item }}"
-          dest: /etc/coredns/keys
+    - block: 
+      - name: Fetch checksum for CoreDNS binary
+        ansible.builtin.set_fact:
+          coredns_checksum: "{{ lookup('url', 'https://github.com/coredns/coredns/releases/download/v' + coredns_version + '/coredns_' + coredns_version + '_linux_' + go_arch + '.tgz.sha256').split(' ')[0] }}"
+        run_once: true
+      - name: Download CoreDNS binary
+        become: false
+        ansible.builtin.get_url:
+          url: "https://github.com/coredns/coredns/releases/download/v{{ coredns_version }}/coredns_{{ coredns_version }}_linux_{{ go_arch }}.tgz"
+          dest: "/tmp/coredns_{{ coredns_version }}_linux_{{ go_arch }}.tgz"
+          checksum: "sha256:{{ coredns_checksum }}"
+        register: _download_binary
+        until: _download_binary is succeeded
+        retries: 5
+        delay: 2
+        delegate_to: localhost
+        check_mode: false
+      - name: Prepare for CoreDNS deflation
+        become: false
+        ansible.builtin.file:
+          path: "/tmp/coredns_{{ coredns_version }}_linux_{{ go_arch }}"
+          state: directory
+          mode: 0755
+        delegate_to: localhost
+        check_mode: false
+      - name: Defalte CoreDNS tarball
+        become: false
+        ansible.builtin.unarchive:
+          src: "/tmp/coredns_{{ coredns_version }}_linux_{{ go_arch }}.tgz"
+          dest: "/tmp/coredns_{{ coredns_version }}_linux_{{ go_arch }}"
+          creates: "/tmp/coredns_{{ coredns_version }}_linux_{{ go_arch }}/coredns"
+        delegate_to: localhost
+        check_mode: false
+      - name: Install CoreDNS binaries
+        ansible.builtin.copy:
+          src: "/tmp/coredns_{{ coredns_version }}_linux_{{ go_arch }}/coredns"
+          dest: "/usr/local/bin/coredns"
+          mode: 0750
           owner: "{{ coredns_system_user }}"
           group: "{{ coredns_system_group }}"
-          mode: 0400
-        with_fileglob: "{{ coredns_keys }}"
+        notify: restart coredns
+        when: not ansible_check_mode
 
-      - name: Add zone files
-        ansible.builtin.template:
-          src: "{{ item }}"
-          dest: /etc/coredns/zones
-          owner: root
-          group: root
-          mode: 0644
-        with_fileglob: "{{ coredns_zones }}"
+  - name: Install the CoreDNS service (SystemD)
+    ansible.builtin.template:
+      src: coredns.service
+      dest: /etc/systemd/system/coredns.service
+      owner: root
+      group: root
+      mode: 0644
+    notify: restart coredns 
+
+  - name: Add Corefile
+    ansible.builtin.template:
+      src: "{{ coredns_config }}"
+      dest: /etc/coredns/Corefile
+      owner: root
+      group: root
+      mode: 0644
+    notify: restart coredns
+
+  - name: Add key files
+    ansible.builtin.template:
+      src: "{{ item }}"
+      dest: /etc/coredns/keys
+      owner: "{{ coredns_system_user }}"
+      group: "{{ coredns_system_group }}"
+      mode: 0400
+    with_fileglob: "{{ coredns_keys }}"
+
+  - name: Add zone files
+    ansible.builtin.template:
+      src: "{{ item }}"
+      dest: /etc/coredns/zones
+      owner: root
+      group: root
+      mode: 0644
+    with_fileglob: "{{ coredns_zones }}"
