@@ -93,6 +93,8 @@
 
 - name: Update CoreDNS zones and keys 
   hosts: all
+  vars_files:
+    - config.yml
   tags:
     - "update-data"
   
