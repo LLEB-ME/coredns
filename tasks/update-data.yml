@@ -1,29 +1,36 @@
 ---
-- name: Update Corefile
-  template:
-    src: "{{ coredns_config }}"
-    dest: /etc/coredns/Corefile
-    owner: root
-    group: root
-    mode: 0644
-  notify: restart coredns
+- name: Update CoreDNS zones and keys
+  hosts: all
 
-- name: Update key files
-  template:
-    src: "{{ item }}"
-    dest: /etc/coredns/keys
-    owner: "coredns"
-    group: "coredns"
-    mode: 0400
-  with_fileglob: "{{ coredns_keys }}"
-  notify: restart coredns
+  vars_files:
+    - config.yml
 
-- name: Update zone files
-  template:
-    src: "{{ item }}"
-    dest: /etc/coredns/zones
-    owner: root
-    group: root
-    mode: 0644
-  with_fileglob: "{{ coredns_zones }}"
-  notify: restart coredns
+  tasks:
+    - name: Update Corefile
+      template:
+        src: "{{ coredns_config }}"
+        dest: /etc/coredns/Corefile
+        owner: root
+        group: root
+        mode: 0644
+      notify: restart coredns
+
+    - name: Update key files
+      template:
+        src: "{{ item }}"
+        dest: /etc/coredns/keys
+        owner: "coredns"
+        group: "coredns"
+        mode: 0400
+      with_fileglob: "{{ coredns_keys }}"
+      notify: restart coredns
+
+    - name: Update zone files
+      template:
+        src: "{{ item }}"
+        dest: /etc/coredns/zones
+        owner: root
+        group: root
+        mode: 0644
+      with_fileglob: "{{ coredns_zones }}"
+      notify: restart coredns
