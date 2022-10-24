@@ -1,8 +1,8 @@
 farer.,
 fa. {
-  errors
   auto {
     directory /etc/coredns/zones/
+    reload 45s
   }
-  reload 45s
+  errors
 }
