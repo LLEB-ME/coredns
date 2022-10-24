@@ -1,5 +1,5 @@
 farer.,
-fa.{
+fa. {
   errors
   auto {
     directory /etc/coredns/zones/
