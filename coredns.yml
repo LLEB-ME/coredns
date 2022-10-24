@@ -55,7 +55,6 @@
           until: _download_binary is succeeded
           retries: 5
           delay: 2
-          delegate_to: localhost
           check_mode: false
         - name: Prepare for CoreDNS deflation
           become: false
@@ -63,7 +62,6 @@
             path: "/tmp/coredns_{{ coredns_version }}_linux_{{ go_arch }}"
             state: directory
             mode: 0755
-          delegate_to: localhost
           check_mode: false
         - name: Defalte CoreDNS tarball
           become: false
@@ -72,7 +70,6 @@
             dest: "/tmp/coredns_{{ coredns_version }}_linux_{{ go_arch }}"
             creates: "/tmp/coredns_{{ coredns_version }}_linux_{{ go_arch }}/coredns"
             remote_src: yes
-          delegate_to: localhost
           check_mode: false
         - name: Install CoreDNS binaries
           ansible.builtin.copy:
