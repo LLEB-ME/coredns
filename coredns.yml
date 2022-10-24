@@ -78,6 +78,7 @@
             mode: 0750
             owner: "coredns"
             group: "coredns"
+            remote_src: yes
           notify: restart coredns
           when: not ansible_check_mode
 
