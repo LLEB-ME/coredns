@@ -4,7 +4,8 @@ coredns_config: "Corefile"
 coredns_keys: "keys/*"
 coredns_zones: "zones/*"
 
-- hosts: all
+- name: Install and setup CoreDNS
+  hosts: all
   pre_tasks:
     - name: Confirm that SystemD is being used
       assert:
