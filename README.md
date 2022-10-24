@@ -8,6 +8,8 @@ Ensure that you have Tar installed.
 2. Clone this repository (`git clone git@github.com:LLEB-ME/coredns-poc.git`)
 3. Run this playbook (`ansible-playbook coredns.yml -K`)
 
+Updating just the data? `ansible-playbook tasks/update-data.yml -K`
+
 ### NOTES
 - coredns.service -> `/etc/systemd/system/coredns.service`
 - Corefile        -> `/etc/coredns/Corefile`
