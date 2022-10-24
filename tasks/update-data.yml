@@ -3,7 +3,7 @@
   hosts: all
 
   vars_files:
-    - {{ config.yml | basename }}
+    - {{ "config.yml" | basename }}
 
   tasks:
     - name: Update Corefile
