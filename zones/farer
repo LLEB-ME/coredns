@@ -1,4 +1,4 @@
-$ORIGN farer.
+$ORIGIN farer.
 @	  3600 IN	SOA  root.dns.nic.fa. nic.fa. 2022102345 7200 3600 1209600 3600
     3600 IN NS   fr75-kaoru.dns.nic.fa
     3600 IN NS   us699-lleb.dns.nic.fa
