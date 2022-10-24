@@ -1,0 +1,8 @@
+farer,
+fa {
+  errors
+  auto {
+    directory /srv/coredns/zones/
+  }
+  reload 45s
+}
