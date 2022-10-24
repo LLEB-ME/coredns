@@ -1,0 +1,5 @@
+---
+coredns_version: 1.9.3
+coredns_config: "Corefile"
+coredns_keys: "keys/*"
+coredns_zones: "zones/*"
