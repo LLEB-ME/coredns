@@ -79,38 +79,38 @@
         notify: restart coredns
         when: not ansible_check_mode
 
-  - name: Install the CoreDNS service (SystemD)
-    ansible.builtin.template:
-      src: coredns.service
-      dest: /etc/systemd/system/coredns.service
-      owner: root
-      group: root
-      mode: 0644
-    notify: restart coredns 
+    - name: Install the CoreDNS service (SystemD)
+      ansible.builtin.template:
+        src: coredns.service
+        dest: /etc/systemd/system/coredns.service
+        owner: root
+        group: root
+        mode: 0644
+      notify: restart coredns 
 
-  - name: Add Corefile
-    ansible.builtin.template:
-      src: "{{ coredns_config }}"
-      dest: /etc/coredns/Corefile
-      owner: root
-      group: root
-      mode: 0644
-    notify: restart coredns
+    - name: Add Corefile
+      ansible.builtin.template:
+        src: "{{ coredns_config }}"
+        dest: /etc/coredns/Corefile
+        owner: root
+        group: root
+        mode: 0644
+      notify: restart coredns
 
-  - name: Add key files
-    ansible.builtin.template:
-      src: "{{ item }}"
-      dest: /etc/coredns/keys
-      owner: "{{ coredns_system_user }}"
-      group: "{{ coredns_system_group }}"
-      mode: 0400
-    with_fileglob: "{{ coredns_keys }}"
+    - name: Add key files
+      ansible.builtin.template:
+        src: "{{ item }}"
+        dest: /etc/coredns/keys
+        owner: "{{ coredns_system_user }}"
+        group: "{{ coredns_system_group }}"
+        mode: 0400
+      with_fileglob: "{{ coredns_keys }}"
 
-  - name: Add zone files
-    ansible.builtin.template:
-      src: "{{ item }}"
-      dest: /etc/coredns/zones
-      owner: root
-      group: root
-      mode: 0644
-    with_fileglob: "{{ coredns_zones }}"
+    - name: Add zone files
+      ansible.builtin.template:
+        src: "{{ item }}"
+        dest: /etc/coredns/zones
+        owner: root
+        group: root
+        mode: 0644
+      with_fileglob: "{{ coredns_zones }}"
