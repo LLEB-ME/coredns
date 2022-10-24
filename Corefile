@@ -2,7 +2,7 @@ farer,
 fa {
   errors
   auto {
-    directory /srv/coredns/zones/
+    directory /etc/coredns/zones/
   }
   reload 45s
 }
