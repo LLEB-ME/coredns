@@ -123,4 +123,4 @@
         group: root
         mode: 0644
       with_fileglob: "{{ coredns_zones }}"
-      notify: restart coredns
+      notify: restart coredns # break here when running just "update-data"
