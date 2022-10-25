@@ -15,6 +15,3 @@ Updating just the data? `ansible-playbook coredns.yml -bKt "update-data"`
 - Corefile        -> `/etc/coredns/Corefile`
 - keys/*          -> `/etc/coredns/keys`
 - zones/*         -> `/etc/coredns/zones`
-
-### ACKNOWLEDGEMENTS
-This playbook has not been tested and is not intended for active usage in the Farer network. This source code is not intended to be visible to all members currently. This will change in the future and is planned to be made public.
