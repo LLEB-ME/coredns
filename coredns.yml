@@ -105,7 +105,6 @@
         owner: root
         group: root
         mode: 0644
-      notify: restart coredns
 
     - name: Add key files
       ansible.builtin.template:
@@ -115,7 +114,6 @@
         group: "coredns"
         mode: 0400
       with_fileglob: "{{ coredns_keys }}"
-      notify: restart coredns
 
     - name: Add zone files
       ansible.builtin.template:
