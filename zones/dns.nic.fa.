@@ -1,8 +1,8 @@
 $ORIGIN dns.nic.fa.
 @	               3600 IN SOA  root.dns.nic.fa. nic.fa. 2022102345 7200 3600 1209600
-                   3600 IN NS   fr75-kaoru.dns.nic.fa
-                   3600 IN NS   us699-lleb.dns.nic.fa
-                   3600 IN NS   us-socal-rilakkuma.dns.nic.fa
+                   3600 IN NS   fr75-kaoru.dns.nic.fa.
+                   3600 IN NS   us699-lleb.dns.nic.fa.
+                   3600 IN NS   us-socal-rilakkuma.dns.nic.fa.
                    3600 IN A    100.80.243.84
                    3600 IN A    100.100.158.26
 root               3600 IN A    100.80.243.84
