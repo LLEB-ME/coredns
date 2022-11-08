@@ -7,6 +7,7 @@ $ORIGIN dns.nic.fa.
                    3600 IN A    100.100.158.26
 root               3600 IN A    100.80.243.84
                    3600 IN A    100.100.158.26
+                   3600 IN A    100.69.188.23
                    3600 IN AAAA fd7a:115c:a1e0:ab12:4843:cd96:6250:f354
                    3600 IN AAAA fd7a:115c:a1e0:ab12:4843:cd96:6264:9e1a
 fr75-kaoru         3600 IN A    100.122.234.115
