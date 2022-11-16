@@ -1,0 +1,7 @@
+$ORIGIN certstore.fa.
+@	  3600 IN	SOA  root.dns.nic.fa. nic.fa. 2022102345 7200 3600 1209600 3600
+    3600 IN NS   fr75-kaoru.dns.nic.fa.
+    3600 IN NS   us699-lleb.dns.nic.fa.
+    3600 IN NS   us-socal-rilakkuma.dns.nic.fa.
+    3600 IN A    100.80.243.84
+    3600 IN AAAA fd7a:115c:a1e0:ab12:4843:cd96:6250:f354    
